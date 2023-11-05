@@ -15,12 +15,18 @@ import {isValueUndefined} from "../utils/IsValueUndefined.tsx";
 import axios from "axios";
 import {useAuth} from "../context/AuthContext.tsx";
 import { useNavigate } from "react-router-dom";
+import {useEffect, useLayoutEffect} from "react";
 const Login = () => {
     const {toggleColorMode} = useColorMode();
     const formBackground = useColorModeValue('gray.100', 'gray.700');
     const {register, control, formState: {errors}} = useForm<loginModel>();
-    const {login} = useAuth();
+    const {isLoggIn,login} = useAuth();
     const navigate = useNavigate();
+
+    useLayoutEffect(() => {
+        if(isLoggIn) navigate("/")
+    },[])
+
     const onSubmit: FormSubmitHandler<loginModel> = async (data) => {
         const request = await axios<response>('http://localhost/user/login',{
             data : data.data,
