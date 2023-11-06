@@ -5,9 +5,7 @@ import {
     Button,
     FormControl,
     FormLabel,
-    Switch,
-    useColorMode,
-    useColorModeValue,
+    useColorModeValue, Link,
 } from '@chakra-ui/react';
 import {loginModel, response} from "../model/Models.tsx";
 import {Form, FormSubmitHandler, useForm} from "react-hook-form";
@@ -15,16 +13,15 @@ import {isValueUndefined} from "../utils/IsValueUndefined.tsx";
 import axios from "axios";
 import {useAuth} from "../context/AuthContext.tsx";
 import { useNavigate } from "react-router-dom";
-import {useEffect, useLayoutEffect} from "react";
+import {useLayoutEffect} from "react";
 const Login = () => {
-    const {toggleColorMode} = useColorMode();
     const formBackground = useColorModeValue('gray.100', 'gray.700');
     const {register, control, formState: {errors}} = useForm<loginModel>();
     const {isLoggIn,login} = useAuth();
     const navigate = useNavigate();
-
     useLayoutEffect(() => {
-        if(isLoggIn) navigate("/")
+        console.log(isLoggIn)
+        if(localStorage.getItem("accessToken")) navigate("/")
     },[])
 
     const onSubmit: FormSubmitHandler<loginModel> = async (data) => {
@@ -86,18 +83,13 @@ const Login = () => {
                     </FormControl>
 
                     <Button colorScheme="teal" mb={8} type={"submit"}>
-                        Log In
+                        Giriş yap
                     </Button>
                     <FormControl display="flex" alignItems="center">
                         <FormLabel htmlFor="dark_mode" mb="0">
-                            Enable Dark Mode?
+                            Kayıt olmak ister misiniz?
                         </FormLabel>
-                        <Switch
-                            id="dark_mode"
-                            colorScheme="teal"
-                            size="lg"
-                            onChange={toggleColorMode}
-                        />
+                        <Link isExternal href={"/register"}>Kayıt Ol</Link>
                     </FormControl>
                 </Form>
             </Flex>
