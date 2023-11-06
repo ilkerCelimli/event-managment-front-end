@@ -9,3 +9,17 @@ export interface response {
     statusCode: number
     message: string
 }
+
+export interface role {
+    id:string
+}
+
+export interface registerModel {
+    name: string,
+    surname: string,
+    email: string,
+    password: string
+    birtday: Date,
+    phoneNumber:string
+    role: Array<role>
+}

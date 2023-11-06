@@ -89,7 +89,7 @@ const Login = () => {
                         <FormLabel htmlFor="dark_mode" mb="0">
                             Kayıt olmak ister misiniz?
                         </FormLabel>
-                        <Link isExternal href={"/register"}>Kayıt Ol</Link>
+                        <Link href={"/register"}>Kayıt Ol</Link>
                     </FormControl>
                 </Form>
             </Flex>
