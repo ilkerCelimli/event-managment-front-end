@@ -5,7 +5,7 @@ import {
     Button,
     FormControl,
     FormLabel,
-    useColorModeValue, Link,
+    useColorModeValue, Link, useToast,
 } from '@chakra-ui/react';
 import {loginModel, response} from "../model/Models.tsx";
 import {Form, FormSubmitHandler, useForm} from "react-hook-form";
@@ -19,9 +19,22 @@ const Login = () => {
     const {register, control, formState: {errors}} = useForm<loginModel>();
     const {isLoggIn,login} = useAuth();
     const navigate = useNavigate();
+    const toast = useToast();
     useLayoutEffect(() => {
         console.log(isLoggIn)
-        if(localStorage.getItem("accessToken")) navigate("/")
+        if(localStorage.getItem("accessToken")){
+           const interval =  setInterval(() => {
+               toast({
+                   title: "Giriş Başarılı",
+                   description:"Anasayfaya yönlendiriliyorsunuz",
+                   status: "success",
+                   duration: 1500,
+                   isClosable: true,
+               })
+                navigate("/")
+            },2000)
+            return () => clearInterval(interval)
+        }
     },[])
 
     const onSubmit: FormSubmitHandler<loginModel> = async (data) => {
@@ -37,7 +50,26 @@ const Login = () => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             login(request.data.data.accessToken,request.data.data.refreshToken)
-            navigate("/")
+            const interval =  setInterval(() => {
+                toast({
+                    title: "Giriş Başarılı",
+                    description:"Anasayfaya yönlendiriliyorsunuz",
+                    status: "success",
+                    duration: 1500,
+                    isClosable: true,
+                })
+                navigate("/")
+            },2000)
+            return () => clearInterval(interval)
+        }
+
+        else {
+            toast({
+                title: "Giriş Basarisiz",
+                status: "error",
+                duration: 1500,
+                isClosable: true,
+            })
         }
     };
     return (
