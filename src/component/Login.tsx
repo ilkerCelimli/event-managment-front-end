@@ -12,58 +12,57 @@ import {Form, FormSubmitHandler, useForm} from "react-hook-form";
 import {isValueUndefined} from "../utils/IsValueUndefined.tsx";
 import axios from "axios";
 import {useAuth} from "../context/AuthContext.tsx";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useLayoutEffect} from "react";
+
 const Login = () => {
     const formBackground = useColorModeValue('gray.100', 'gray.700');
     const {register, control, formState: {errors}} = useForm<loginModel>();
-    const {isLoggIn,login} = useAuth();
+    const {isLoggIn, login} = useAuth();
     const navigate = useNavigate();
     const toast = useToast();
     useLayoutEffect(() => {
         console.log(isLoggIn)
-        if(localStorage.getItem("accessToken")){
-           const interval =  setInterval(() => {
-               toast({
-                   title: "Giriş Başarılı",
-                   description:"Anasayfaya yönlendiriliyorsunuz",
-                   status: "success",
-                   duration: 1500,
-                   isClosable: true,
-               })
-                navigate("/")
-            },2000)
-            return () => clearInterval(interval)
-        }
-    },[])
-
-    const onSubmit: FormSubmitHandler<loginModel> = async (data) => {
-        const request = await axios<response>('http://localhost/user/login',{
-            data : data.data,
-            method : 'POST',
-            headers : {
-                'Content-Type' : 'application/json',
-
-            }
-        })
-        if(request.status === 200){
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            login(request.data.data.accessToken,request.data.data.refreshToken)
-            const interval =  setInterval(() => {
+        if (localStorage.getItem("accessToken")) {
+            const interval = setInterval(() => {
                 toast({
                     title: "Giriş Başarılı",
-                    description:"Anasayfaya yönlendiriliyorsunuz",
+                    description: "Anasayfaya yönlendiriliyorsunuz",
                     status: "success",
                     duration: 1500,
                     isClosable: true,
                 })
                 navigate("/")
-            },2000)
+            }, 2000)
             return () => clearInterval(interval)
         }
+    }, [])
 
-        else {
+    const onSubmit: FormSubmitHandler<loginModel> = async (data) => {
+        const request = await axios<response>('http://localhost/user/login', {
+            data: data.data,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+
+            }
+        })
+        if (request.status === 200) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            login(request.data.data.accessToken, request.data.data.refreshToken)
+            const interval = setInterval(() => {
+                toast({
+                    title: "Giriş Başarılı",
+                    description: "Anasayfaya yönlendiriliyorsunuz",
+                    status: "success",
+                    duration: 1500,
+                    isClosable: true,
+                })
+                navigate("/")
+            }, 2000)
+            return () => clearInterval(interval)
+        } else {
             toast({
                 title: "Giriş Basarisiz",
                 status: "error",
@@ -117,12 +116,19 @@ const Login = () => {
                     <Button colorScheme="teal" mb={8} type={"submit"}>
                         Giriş yap
                     </Button>
+
+                    <FormControl display="flex" alignItems="center">
+                        <Link href={"/forgotpassword"}>Parolamı unuttum.</Link>
+                    </FormControl>
+
                     <FormControl display="flex" alignItems="center">
                         <FormLabel htmlFor="dark_mode" mb="0">
                             Kayıt olmak ister misiniz?
                         </FormLabel>
                         <Link href={"/register"}>Kayıt Ol</Link>
                     </FormControl>
+
+
                 </Form>
             </Flex>
         </Flex>

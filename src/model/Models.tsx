@@ -1,14 +1,16 @@
-export interface loginModel {
-    email: string,
-    password:string
-}
-
 export interface response {
     data : unknown,
     localDateTime: number,
     statusCode: number
     message: string
 }
+
+export interface loginModel {
+    email: string,
+    password:string
+}
+
+
 
 export interface role {
     id:string
@@ -22,4 +24,8 @@ export interface registerModel {
     birtday: Date,
     phoneNumber:string
     role: Array<role>
+}
+
+export interface forgotPasswordModel {
+    email: string
 }
