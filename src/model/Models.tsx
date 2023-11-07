@@ -9,9 +9,6 @@ export interface loginModel {
     email: string,
     password:string
 }
-
-
-
 export interface role {
     id:string
 }

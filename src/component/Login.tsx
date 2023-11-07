@@ -36,7 +36,7 @@ const Login = () => {
             }, 2000)
             return () => clearInterval(interval)
         }
-    }, [])
+    }, [isLoggIn])
 
     const onSubmit: FormSubmitHandler<loginModel> = async (data) => {
         const request = await axios<response>('http://localhost/user/login', {
@@ -52,13 +52,6 @@ const Login = () => {
             // @ts-ignore
             login(request.data.data.accessToken, request.data.data.refreshToken)
             const interval = setInterval(() => {
-                toast({
-                    title: "Giriş Başarılı",
-                    description: "Anasayfaya yönlendiriliyorsunuz",
-                    status: "success",
-                    duration: 1500,
-                    isClosable: true,
-                })
                 navigate("/")
             }, 2000)
             return () => clearInterval(interval)
