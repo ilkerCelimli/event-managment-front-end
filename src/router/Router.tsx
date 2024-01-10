@@ -20,7 +20,7 @@ const routes = createBrowserRouter([
         element: <RegisterPage/>
     },
     {
-        path: "/forgotpassword",
+        path: "/resetpassword",
         element: <ForgotPassword/>
     }
 ])

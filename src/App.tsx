@@ -4,7 +4,6 @@ import {useAuth} from "./context/AuthContext.tsx";
 function App() {
 
     const {logout} = useAuth()
-
   return (
     <>
         Index

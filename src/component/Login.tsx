@@ -24,7 +24,7 @@ const Login = () => {
     useLayoutEffect(() => {
         console.log(isLoggIn)
         if (localStorage.getItem("accessToken")) {
-            const interval = setInterval(() => {
+            setTimeout(() => {
                 toast({
                     title: "Giriş Başarılı",
                     description: "Anasayfaya yönlendiriliyorsunuz",
@@ -32,9 +32,8 @@ const Login = () => {
                     duration: 1500,
                     isClosable: true,
                 })
-                navigate("/")
-            }, 2000)
-            return () => clearInterval(interval)
+            },2000)
+            navigate("/")
         }
     }, [isLoggIn])
 
